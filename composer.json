@@ -1,0 +1,21 @@
+{
+    "name": "pablo-pacheco/wp-namespace-autoloader",
+    "type": "library",
+    "description": "A PHP autoloader class that follows the WordPress coding standards for class names and class filenames",
+    "keywords": ["wp","wordpress", "autoload", "namespace"],
+    "homepage": "https://github.com/pablo-pacheco/wp-namespace-autoloader",
+    "license": "GPLv2",
+    "authors": [
+        {
+            "name": "Pablo dos S G Pacheco",
+            "email": "pablo.sg.pacheco@gmail.com",            
+            "role": " Web Developer"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0"
+    },
+    "autoload": {
+        "classmap": ["src/"]
+    }
+}
