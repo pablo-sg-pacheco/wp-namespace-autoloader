@@ -57,7 +57,7 @@ namespace My_Project\Admin_Pages;
 class Main_Page{
 }
 ```
-located in **your_projct_root_folder\admin_pages\class-main_page.php**, 
+located in **your_projct_root_folder\admin_pages\class-main-page.php**, 
 you can instantiate it like this:
 ```php
 <?php
