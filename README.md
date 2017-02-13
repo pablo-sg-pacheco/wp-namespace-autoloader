@@ -17,7 +17,7 @@ To achieve this I'm following [WordPress coding standards](https://make.wordpres
 
 **Installation**
 =====================
-You just have to require it just like a default composer dependency:
+You just have to require it just like a composer default dependency:
 
 ```json
 "require": {	
