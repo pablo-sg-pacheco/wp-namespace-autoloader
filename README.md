@@ -6,7 +6,7 @@ A PHP autoloader class that follows the WordPress coding standards for class nam
 I don't know exactly why namespaces and autoloaders aren't used widely in WordPress community but i really think they are cool and help organizing your code. With these features you don't have to worry about including and requiring php files manually ever again and your code gets organized in folders.
 
 To achieve this I'm following [WordPress coding standards](https://make.wordpress.org/core/handbook/best-practices/coding-standards/php/#naming-conventions). It means I'm doing these things:
-* Converting all classes to lowercase 
+* Converting all classes and paths to lowercase 
 * Replacing underscores on class names by hyphens
 * Putting 'class-' before the final class name
 
