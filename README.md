@@ -49,7 +49,7 @@ And now you are good to go
 
 **Example**
 ===============
-**Now it's the cool part!**
+**Now comes the cool part!**
 If you have this class
 ```php
 <?php
