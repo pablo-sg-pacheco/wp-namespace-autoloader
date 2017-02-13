@@ -59,19 +59,22 @@ if ( ! class_exists( 'WP_Namespace_Autoloader' ) ) {
 					// Removes namespace from class
 					$class = str_replace( $namespace . DIRECTORY_SEPARATOR, '', $class );
 
-					// Class formatted to WordPress standards (without class- yet)
-					$class_formatted     = strtolower( str_replace( array( '_', "\0" ), array('-','',), $class ) . '.php' );
+					// Class formatted to WordPress standards (without class- yet)					
+					$class_formatted     = strtolower($class);
 					$class_formatted_arr = explode( DIRECTORY_SEPARATOR, $class_formatted );
 
 					// File name to load (including "class-" before it, like wordpress standards says to)
 					$file_name = 'class-' . array_pop( $class_formatted_arr );
+
+					// Replaces underscores by hyphens on file name only
+					$file_name_dash_replaced = str_replace( array( '_', "\0" ), array('-','',), $file_name ) . '.php';
 
 					// Path to final file
 					$final_file_path = implode( DIRECTORY_SEPARATOR, $class_formatted_arr );
 					$final_file_path .= count( $class_formatted_arr ) >= 1 ? DIRECTORY_SEPARATOR : '';
 
 					// Final file to load
-					$file = $classes_full_path . $final_file_path . $file_name;
+					$file = $classes_full_path . $final_file_path . $file_name_dash_replaced;
 
 					if ( file_exists( $file ) ) {
 						require_once $file;
