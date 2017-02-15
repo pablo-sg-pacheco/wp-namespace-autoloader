@@ -41,7 +41,7 @@ Now you have to initialize it
 <?php
 new \WP_Namespace_Autoloader( array(    
 	'directory'   => __DIR__,       // Directory of your project. It can be your theme or plugin. __DIR__ is probably your best bet. 	
-	'namespace'   => __NAMESPACE__, // Namespace of your base project. E.g My_Project\Admin\Tests should be My_Project. Probably if you just pass the constant __NAMESPACE__ it should work		
+	'namespace'   => __NAMESPACE__, // Main namespace of your project. E.g My_Project\Admin\Tests should be My_Project. Probably if you just pass the constant __NAMESPACE__ it should work		
 	'classes_dir' => 'src',         // (optional). It is where your namespaced classes are located inside your project. If your classes are in the root level, leave this empty. If they are located on 'src' folder, write 'src' here 
 ) );
 ```
@@ -58,9 +58,21 @@ namespace My_Project\Admin_Pages;
 class Main_Page{
 }
 ```
-located in **your_projct_root_folder\admin_pages\class-main-page.php**, 
+located in **your_projct_root_folder\Admin_Pages\class-main-page.php**, 
 you can instantiate it like this:
 ```php
 <?php
 new \My_Project\Admin_Pages\Main_Page();
 ```
+
+If you want to keep all your folders lowercased for some reason, you can use the parameter **'namespace_to_lowercase'** like this
+```php
+<?php
+new \WP_Namespace_Autoloader( array(    
+	'directory'              => __DIR__,
+	'namespace_to_lowercase' => true,
+	'namespace'              => __NAMESPACE__, 
+	'classes_dir'            => 'src',
+) );
+```
+And this is going to be the final path: your_projct_root_folder\**admin_pages**\class-main-page.php, 
