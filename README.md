@@ -3,9 +3,9 @@ A PHP autoloader class that follows WordPress coding standards using **Namespace
 
 **Description**
 =====================
-I don't know exactly why namespaces and autoloaders aren't widely used in WordPress community but i really think they are cool and help organizing your code. With these features you don't have to worry about including and requiring php files manually ever again and your code gets organized in folders.
+Namespaces and autoloaders are cool and help organizing your code. With these features you don't have to worry about including and requiring php files manually ever again and your code gets organized in folders.
 
-The implementation of this autoloader is practically the same as a [PSR-4](http://www.php-fig.org/psr/psr-4/) one. The only difference here is I'm following the WordPress coding standards for the final file name to be loaded. 
+The implementation of this autoloader is practically the same as of a [PSR-4](http://www.php-fig.org/psr/psr-4/) one. The only difference here is that I'm following the WordPress coding standards for the final file to be loaded. 
 
 To achieve this I'm following [WordPress coding standards](https://make.wordpress.org/core/handbook/best-practices/coding-standards/php/#naming-conventions). It means I'm doing these things:
 * Converting all classes and paths to lowercase 
