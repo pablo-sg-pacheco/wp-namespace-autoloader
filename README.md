@@ -70,11 +70,12 @@ new \My_Project\Admin_Pages\Main_Page();
 If you want to keep all your folders lowercased for some reason, you can use the parameter **'namespace_to_lowercase'** like this
 ```php
 <?php
+namespace My_Project;
 new \WP_Namespace_Autoloader( array(    
 	'directory'              => __DIR__,
 	'namespace_to_lowercase' => true,
 	'namespace'              => __NAMESPACE__, 
-	'classes_dir'            => 'src',
+	'classes_dir'            => '',
 ) );
 ```
 And this is going to be the final path: **your_projct_root_folder\admin_pages\class-main-page.php**, 
