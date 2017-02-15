@@ -74,4 +74,4 @@ new \WP_Namespace_Autoloader( array(
 	'classes_dir'            => '',
 ) );
 ```
-And this is going to be the final path: **your_projct_root_folder\admin_pages\class-main-page.php**, 
+So this is going to be the final path: **your_projct_root_folder\admin_pages\class-main-page.php**, 
