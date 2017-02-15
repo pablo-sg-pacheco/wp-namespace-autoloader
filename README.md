@@ -48,11 +48,7 @@ new \WP_Namespace_Autoloader( array(
 ) );
 ```
 
-And now you are good to go
-
-**Example**
-===============
-**Now comes the cool part!**
+And now you are good to go. **Now comes the cool part!**
 If you have this class
 ```php
 <?php
