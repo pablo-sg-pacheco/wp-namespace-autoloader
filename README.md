@@ -3,7 +3,7 @@ A PHP autoloader class that follows the WordPress coding standards for class nam
 
 **Description**
 =====================
-I don't know exactly why namespaces and autoloaders aren't used widely in WordPress community but i really think they are cool and help organizing your code. With these features you don't have to worry about including and requiring php files manually ever again and your code gets organized in folders.
+I don't know exactly why namespaces and autoloaders aren't widely used in WordPress community but i really think they are cool and help organizing your code. With these features you don't have to worry about including and requiring php files manually ever again and your code gets organized in folders.
 
 To achieve this I'm following [WordPress coding standards](https://make.wordpress.org/core/handbook/best-practices/coding-standards/php/#naming-conventions). It means I'm doing these things:
 * Converting all classes and paths to lowercase 
@@ -12,7 +12,7 @@ To achieve this I'm following [WordPress coding standards](https://make.wordpres
 
 **Note**
 -------------
-* I'm also replacing the main project namespace by emtpy string. It means that it shouldn't be considered on autoload. See the example to understand it better
+* I'm also replacing the main project namespace by an emtpy string. It means that it shouldn't be considered on autoload. See the example to understand it better
 * I know WordPress still gives support to php 5.2 which doesn't have the namespace feature. I'm considering all developers should be using at least php 5.3 here. 
 
 
