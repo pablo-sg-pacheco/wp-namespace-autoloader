@@ -5,7 +5,7 @@ A PHP autoloader class that follows the WordPress coding standards applying PSR-
 =====================
 Namespaces and autoloaders are cool and help organizing your code. With these features you don't have to worry about including and requiring php files manually ever again and your code gets organized in folders.
 
-This is a [PSR-4](http://www.php-fig.org/psr/psr-4/) autoloader implementation following the specifications of [WordPress naming conventions](https://make.wordpress.org/core/handbook/best-practices/coding-standards/php/#naming-conventions)
+This is a [PSR-4](http://www.php-fig.org/psr/psr-4/) autoloader implementation following [WordPress naming conventions](https://make.wordpress.org/core/handbook/best-practices/coding-standards/php/#naming-conventions)
 
 To achieve this I'm respecting [WordPress naming conventions](https://make.wordpress.org/core/handbook/best-practices/coding-standards/php/#naming-conventions). It means I'm doing these things:
 * Converting classes filenames to lowercase 
