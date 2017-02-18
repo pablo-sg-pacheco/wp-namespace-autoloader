@@ -41,11 +41,13 @@ Now you have to initialize it
 
 ```php
 <?php
-new \WP_Namespace_Autoloader( array(    
-	'directory'   => __DIR__,       // Directory of your project. It can be your theme or plugin. __DIR__ is probably your best bet. 	
-	'namespace'   => __NAMESPACE__, // Main namespace of your project. E.g My_Project\Admin\Tests should be My_Project. Probably if you just pass the constant __NAMESPACE__ it should work		
-	'classes_dir' => 'src',         // (optional). It is where your namespaced classes are located inside your project. If your classes are in the root level, leave this empty. If they are located on 'src' folder, write 'src' here 
+use Pablo_Pacheco\WP_Namespace_Autoloader\WP_Namespace_Autoloader;
+$autoloader = new \WP_Namespace_Autoloader( array(    
+	'directory'          => __DIR__,       // Directory of your project. It can be your theme or plugin. __DIR__ is probably your best bet. 	
+	'namespace_prefix'   => __NAMESPACE__, // Main namespace of your project. E.g My_Project\Admin\Tests should be My_Project. Probably if you just pass the constant __NAMESPACE__ it should work		
+	'classes_dir'        => 'src',         // (optional). It is where your namespaced classes are located inside your project. If your classes are in the root level, leave this empty. If they are located on 'src' folder, write 'src' here 
 ) );
+$autoloader->init();
 ```
 
 And now you are good to go. **Now comes the cool part!**
@@ -63,13 +65,13 @@ you can instantiate it like this:
 new \My_Project\Admin_Pages\Main_Page();
 ```
 
-If you want to keep all your folders lowercased for some reason, you can use the parameter **'namespace_to_lowercase'** like this
+If you want to keep all your folders lowercased for some reason, you can use the parameter **'force_to_lowercase'** like this
 ```php
 <?php
 namespace My_Project;
 new \WP_Namespace_Autoloader( array(    
 	'directory'              => __DIR__,
-	'namespace_to_lowercase' => true,
+	'force_to_lowercase'     => true,
 	'namespace'              => __NAMESPACE__, 
 	'classes_dir'            => '',
 ) );
