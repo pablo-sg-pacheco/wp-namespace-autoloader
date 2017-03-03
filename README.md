@@ -36,43 +36,33 @@ Firstly, load the composer dependencies like you are used to
 require __DIR__ . '/vendor/autoload.php';
 ```
 
-Now you have to initialize it
+Now you have to initialize it and you are good to go
 
 ```php
 <?php
 use Pablo_Pacheco\WP_Namespace_Autoloader\WP_Namespace_Autoloader;
 $autoloader = new \WP_Namespace_Autoloader( array(    
 	'directory'          => __DIR__,       // Directory of your project. It can be your theme or plugin. __DIR__ is probably your best bet. 	
-	'namespace_prefix'   => __NAMESPACE__, // Main namespace of your project. E.g My_Project\Admin\Tests should be My_Project. Probably if you just pass the constant __NAMESPACE__ it should work		
+	'namespace_prefix'   => 'My_Project', // Main namespace of your project. E.g My_Project\Admin\Tests should be My_Project. Probably if you just pass the constant __NAMESPACE__ it should work		
 	'classes_dir'        => 'src',         // (optional). It is where your namespaced classes are located inside your project. If your classes are in the root level, leave this empty. If they are located on 'src' folder, write 'src' here 
 ) );
 $autoloader->init();
 ```
 
-And now you are good to go. **Now comes the cool part!**
-If you have this class
+If you want to keep all your folders lowercased for some reason, you can use the parameter **'force_to_lowercase'** like this
+So this is going to be the final path: **your_projct_root_folder\admin_pages\class-main-page.php**
+
+**Now comes the cool part!**
+If you have a simple class located on **your_projct_root_folder\Admin_Pages\class-main-page.php**
+like this
 ```php
 <?php
 namespace My_Project\Admin_Pages;
 class Main_Page{
 }
 ```
-located in **your_projct_root_folder\Admin_Pages\class-main-page.php**, 
-you can instantiate it like this:
-```php
-<?php
-new \My_Project\Admin_Pages\Main_Page();
-```
 
-If you want to keep all your folders lowercased for some reason, you can use the parameter **'force_to_lowercase'** like this
-```php
-<?php
-namespace My_Project;
-new \WP_Namespace_Autoloader( array(    
-	'directory'              => __DIR__,
-	'force_to_lowercase'     => true,
-	'namespace'              => __NAMESPACE__, 
-	'classes_dir'            => '',
-) );
-```
-So this is going to be the final path: **your_projct_root_folder\admin_pages\class-main-page.php**, 
+You can instantiate it and it's going to work
+
+
+
