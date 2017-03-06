@@ -69,8 +69,8 @@ You can instantiate it and it's going to work
 
 Parameter | Default value | Description
 ------------ | ------------- | ------------
-**force_to_lowercase** | false | If you want to keep all your folders lowercased for some reason, you can use the parameter **'force_to_lowercase'** = true. 
-So this would be the final path: **your_projct_root_folder\admin_pages\class-main-page.php**
+**force_to_lowercase** | false | If you want to keep all your folders lowercased for some reason, you can use the parameter **'force_to_lowercase'** = true. So this would be the final path: **your_projct_root_folder\admin_pages\class-main-page.php**
+
 
 
 
