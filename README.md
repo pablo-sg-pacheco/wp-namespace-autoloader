@@ -49,9 +49,6 @@ $autoloader = new \WP_Namespace_Autoloader( array(
 $autoloader->init();
 ```
 
-If you want to keep all your folders lowercased for some reason, you can use the parameter **'force_to_lowercase'** like this
-So this is going to be the final path: **your_projct_root_folder\admin_pages\class-main-page.php**
-
 **Now comes the cool part!**
 If you have a simple class located on **your_projct_root_folder\Admin_Pages\class-main-page.php**
 like this
@@ -63,6 +60,13 @@ class Main_Page{
 ```
 
 You can instantiate it and it's going to work
+
+**Parameters**
+===============
+* force_to_lowercase = false;
+
+If you want to keep all your folders lowercased for some reason, you can use the parameter **'force_to_lowercase'** = true, s
+So this would be the final path: **your_projct_root_folder\admin_pages\class-main-page.php**
 
 
 
