@@ -63,9 +63,6 @@ You can instantiate it and it's going to work
 
 **Parameters**
 ===============
-* force_to_lowercase = false;
-
-
 
 Parameter | Default value | Description
 ------------ | ------------- | ------------
