@@ -19,11 +19,14 @@ To achieve this I'm respecting [WordPress naming conventions](https://make.wordp
 
 **Installation**
 =====================
-You just have to require it just like a composer default dependency:
+You just have to require it just like a composer default dependency. You may have to use **preferred-install** as **dist** so you will be able to commit the files as .git files will not be created
 
 ```json
 "require": {	
 	"pablo-pacheco/wp-namespace-autoloader": "dev-master"
+},
+"config": {
+	"preferred-install": "dist"
 }
 ```
 
