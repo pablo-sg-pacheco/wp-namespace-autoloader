@@ -66,6 +66,8 @@ class Main_Page{
 
 **Parameters**
 ===============
+This class has parameters that make it flexible enough to fit any kind of project.
+You can for example lowercase all folders using ``` lowercase => array('file','folders')``` and converting underscores to hyphens on folders too with ```underscore_to_hyphen => array('file','folders')```
 
 Parameter | Default value | Description
 ------------ | ------------- | ------------
