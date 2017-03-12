@@ -71,6 +71,7 @@ This class has parameters that make it flexible enough to fit any kind of projec
 **Examples**
 * Lowercases all folders using `lowercase => array('file','folders')`
 * Converts underscores to hyphens on folders too with `underscore_to_hyphen => array('file','folders')`
+* Doesn't prepend class before file with `prepend_class => false`
 
 Parameter | Default value | Description
 ------------ | ------------- | ------------
