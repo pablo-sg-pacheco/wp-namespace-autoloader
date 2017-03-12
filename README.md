@@ -10,7 +10,7 @@ This is a [PSR-4](http://www.php-fig.org/psr/psr-4/) autoloader implementation f
 To achieve this I'm respecting [WordPress naming conventions](https://make.wordpress.org/core/handbook/best-practices/coding-standards/php/#naming-conventions). It means I'm doing these things:
 * Converting classes filenames to lowercase 
 * Replacing underscores on class filenames by hyphens
-* Putting 'class-' before the final class name
+* Prepending 'class-' before the final class name
 
 **Note**
 -------------
