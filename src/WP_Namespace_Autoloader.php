@@ -11,6 +11,8 @@ namespace Pablo_Pacheco\WP_Namespace_Autoloader;
 if ( ! class_exists( '\Pablo_Pacheco\WP_Namespace_Autoloader\WP_Namespace_Autoloader' ) ) {
 	class WP_Namespace_Autoloader {
 
+		private $args;
+
 		/**
 		 * Autoloader constructor.
 		 *
@@ -19,19 +21,25 @@ if ( ! class_exists( '\Pablo_Pacheco\WP_Namespace_Autoloader\WP_Namespace_Autolo
 		 * @param array|string $args               {
 		 *                                         Array of arguments.
 		 *
-		 * @type string        $directory          Current directory. Use __DIR__.
-		 * @type string        $namespace_prefix   Main namespace of your project . Probably use __NAMESPACE__.
-		 * @type string        $force_to_lowercase If you want to keep all your folders lowercased
-		 * @type string        $classes_dir        Name of the directory containing all your classes (optional).
+		 * @type string        $directory                Current directory. Use __DIR__.
+		 * @type string        $namespace_prefix         Main namespace of your project . Probably use __NAMESPACE__.
+		 * @type array         $lowercase                If you want to lowercase. It accepts an array with two possible values: 'file' | 'folders'
+		 * @type array         $underscore_to_hyphen     If you want to convert underscores to hyphens. It accepts an array with two possible values: 'file' | 'folders'
+		 * @type boolean       $prepend_class            If you want to prepend 'class-' before files
+		 * @type string        $classes_dir              Name of the directory containing all your classes (optional).
 		 * }
 		 */
 		function __construct( $args = array() ) {
 			$args = wp_parse_args( $args, array(
-				'directory'          => null,
-				'namespace_prefix'   => null,
-				'force_to_lowercase' => false,
-				'classes_dir'        => '',
+				'directory'            => null,
+				'namespace_prefix'     => null,
+				'lowercase'            => array('file'), // 'file' | folders
+				'underscore_to_hyphen' => array('file'), // 'file' | folders
+				'prepend_class'        => true,
+				'classes_dir'          => '',
 			) );
+
+
 
 			$this->set_args( $args );
 		}
@@ -112,8 +120,12 @@ if ( ! class_exists( '\Pablo_Pacheco\WP_Namespace_Autoloader\WP_Namespace_Autolo
 			array_pop( $namespaces_without_prefix_arr );
 			$namespace_file_path = implode( DIRECTORY_SEPARATOR, $namespaces_without_prefix_arr ) . DIRECTORY_SEPARATOR;
 
-			if ( $args['force_to_lowercase'] ) {
+			if ( in_array( "folders", $args['lowercase'] ) ) {
 				$namespace_file_path = strtolower( $namespace_file_path );
+			}
+
+			if ( in_array( "folders", $args['underscore_to_hyphen'] ) ) {
+				$namespace_file_path = str_replace( array( '_', "\0" ), array( '-', '', ), $namespace_file_path );
 			}
 
 			return $namespace_file_path;
@@ -134,14 +146,26 @@ if ( ! class_exists( '\Pablo_Pacheco\WP_Namespace_Autoloader\WP_Namespace_Autolo
 			// Gets namespace file path
 			$namespaces_arr = explode( '\\', $sanitized_class );
 
+			$final_file = array_pop( $namespaces_arr );
+
 			// Final file name
-			$final_file = strtolower( array_pop( $namespaces_arr ) );
+			if ( in_array( "file", $args['lowercase'] ) ) {
+				$final_file = strtolower( $final_file );
+			}
 
 			// Final file with underscores replaced
-			$file_name_dash_replaced = str_replace( array( '_', "\0" ), array( '-', '', ), $final_file ) . '.php';
+			if ( in_array( "file", $args['underscore_to_hyphen'] ) ) {
+				$final_file = str_replace( array( '_', "\0" ), array( '-', '', ), $final_file );
+			}
 
-			// Final file with 'class' appended
-			return 'class-' . $file_name_dash_replaced;
+			$final_file .= '.php';
+
+			// Prepend class
+			if ( $args['prepend_class'] ) {
+				$final_file = 'class-' . $final_file;
+			}
+
+			return $final_file;
 		}
 
 		/**
