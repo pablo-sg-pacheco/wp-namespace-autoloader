@@ -54,7 +54,7 @@ $autoloader->init();
 
 **Now comes the cool part!**
 If you have a simple class located on **your_projct_root_folder\Admin_Pages\class-main-page.php**
-like this
+like this, you can instantiate it and it's going to work
 ```php
 <?php
 namespace My_Project\Admin_Pages;
@@ -62,7 +62,7 @@ class Main_Page{
 }
 ```
 
-You can instantiate it and it's going to work
+
 
 **Parameters**
 ===============
