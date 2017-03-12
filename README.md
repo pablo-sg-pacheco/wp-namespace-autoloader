@@ -71,10 +71,10 @@ Parameter | Default value | Description
 ------------ | ------------- | ------------
 **directory** | null | Path of your project. Probably use **__DIR__.** here
 **namespace_prefix** | null | Namespace prefix of your project
-**$classes_dir** | '' | Relative path of the directory containing all your classes **(optional)**.
+**classes_dir** | '' | Relative path of the directory containing all your classes **(optional)**.
 **lowercase** | array('file') | If you want to lowercase just the file or folders too. It accepts an array with two possible values: 'file', 'folders'.
-**$underscore_to_hyphen** | array('file') | If you want to convert underscores to hyphens. It accepts an array with two possible values: 'file',  'folders'.
-**$prepend_class** | true | If you want to prepend 'class-' before files
+**underscore_to_hyphen** | array('file') | If you want to convert underscores to hyphens. It accepts an array with two possible values: 'file',  'folders'.
+**prepend_class** | true | If you want to prepend 'class-' before files
 
 
 
