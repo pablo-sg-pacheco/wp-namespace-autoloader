@@ -69,7 +69,7 @@ class Main_Page{
 
 Parameter | Default value | Description
 ------------ | ------------- | ------------
-**directory** | ```null``` | Path of your project. Probably use **```__DIR__.```** here
+**directory** | ```null``` | Path of your project. Probably use **```__DIR__```** here
 **namespace_prefix** | ```null``` | Namespace prefix of your project
 **classes_dir** | ```''``` | Relative path of the directory containing all your classes **(optional)**.
 **lowercase** | ```array('file')``` | If you want to lowercase just the file or folders too. It accepts an array with two possible values: **'file', 'folders'**.
