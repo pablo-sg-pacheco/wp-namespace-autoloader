@@ -39,8 +39,6 @@ if ( ! class_exists( '\Pablo_Pacheco\WP_Namespace_Autoloader\WP_Namespace_Autolo
 				'classes_dir'          => '',
 			) );
 
-
-
 			$this->set_args( $args );
 		}
 
