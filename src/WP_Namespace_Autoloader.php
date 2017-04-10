@@ -70,9 +70,8 @@ if ( ! class_exists( '\Pablo_Pacheco\WP_Namespace_Autoloader\WP_Namespace_Autolo
 		 * @param $class
 		 */
 		public function autoload( $class ) {
-			$file = $this->convert_class_to_file( $class );
-
 			if ( $this->need_to_autoload( $class ) ) {
+				$file = $this->convert_class_to_file( $class );
 				if ( file_exists( $file ) ) {
 					require_once $file;
 				} else {
@@ -115,6 +114,7 @@ if ( ! class_exists( '\Pablo_Pacheco\WP_Namespace_Autoloader\WP_Namespace_Autolo
 
 			// Gets namespace file path
 			$namespaces_without_prefix_arr = explode( '\\', $namespace_without_prefix );
+
 			array_pop( $namespaces_without_prefix_arr );
 			$namespace_file_path = implode( DIRECTORY_SEPARATOR, $namespaces_without_prefix_arr ) . DIRECTORY_SEPARATOR;
 
@@ -124,6 +124,10 @@ if ( ! class_exists( '\Pablo_Pacheco\WP_Namespace_Autoloader\WP_Namespace_Autolo
 
 			if ( in_array( "folders", $args['underscore_to_hyphen'] ) ) {
 				$namespace_file_path = str_replace( array( '_', "\0" ), array( '-', '', ), $namespace_file_path );
+			}
+
+			if($namespace_file_path=='\\' || $namespace_file_path=='\/'){
+				$namespace_file_path='';
 			}
 
 			return $namespace_file_path;
@@ -186,7 +190,7 @@ if ( ! class_exists( '\Pablo_Pacheco\WP_Namespace_Autoloader\WP_Namespace_Autolo
 		 */
 		private function sanitize_namespace( $namespace, $add_backslash = false ) {
 			if ( $add_backslash ) {
-				return trim( $namespace, '\\' ) . DIRECTORY_SEPARATOR;
+				return trim( $namespace, '\\' ) . '\\';
 			} else {
 				return trim( $namespace, '\\' );
 			}
@@ -206,7 +210,7 @@ if ( ! class_exists( '\Pablo_Pacheco\WP_Namespace_Autoloader\WP_Namespace_Autolo
 				}
 			}
 
-			$dir                 = $this->get_dir();
+			$dir                 = $this->get_dir();			
 			$namespace_file_path = $this->get_namespace_file_path( $class );
 			$final_file          = $this->get_file_applying_wp_standards( $class );
 

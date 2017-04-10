@@ -10,7 +10,7 @@ This is a [PSR-4](http://www.php-fig.org/psr/psr-4/) autoloader implementation f
 To achieve this I'm respecting [WordPress naming conventions](https://make.wordpress.org/core/handbook/best-practices/coding-standards/php/#naming-conventions). It means I'm doing these things:
 * Converting classes filenames to lowercase 
 * Replacing underscores on class filenames by hyphens
-* Putting 'class-' before the final class name
+* Prepending 'class-' before the final class name
 
 **Note**
 -------------
@@ -19,7 +19,7 @@ To achieve this I'm respecting [WordPress naming conventions](https://make.wordp
 
 **Installation**
 =====================
-You just have to require it just like a composer default dependency. You may have to use **preferred-install** as **dist** so you will be able to commit the files as .git files will not be created
+You just have to require it just like a composer default dependency. You may have to use **preferred-install** as **dist** so you will be able to commit files as .git files will not be created
 
 ```json
 "require": {	
@@ -54,7 +54,7 @@ $autoloader->init();
 
 **Now comes the cool part!**
 If you have a simple class located on **your_projct_root_folder\Admin_Pages\class-main-page.php**
-like this
+like this, you can instantiate it and it's going to work
 ```php
 <?php
 namespace My_Project\Admin_Pages;
@@ -62,14 +62,27 @@ class Main_Page{
 }
 ```
 
-You can instantiate it and it's going to work
+
 
 **Parameters**
 ===============
 
 Parameter | Default value | Description
 ------------ | ------------- | ------------
-**force_to_lowercase** | false | If you want to keep all your folders lowercased for some reason, you can use the parameter **'force_to_lowercase'** = true. So this would be the final path: **your_projct_root_folder\admin_pages\class-main-page.php**
+**directory** | ```null``` | Path of your project. Probably use **```__DIR__```** here
+**namespace_prefix** | ```null``` | Namespace prefix of your project
+**classes_dir** | ```''``` | Relative path of the directory containing all your classes **(optional)**.
+**lowercase** | ```array('file')``` | If you want to lowercase just the file or folders too. It accepts an array with two possible values: **'file', 'folders'**.
+**underscore_to_hyphen** | ```array('file')``` | If you want to convert underscores to hyphens. It accepts an array with two possible values: **'file',  'folders'**.
+**prepend_class** | ```true``` | If you want to prepend 'class-' before files
+
+This class has parameters that make it flexible enough to fit any kind of project.
+
+**Examples**
+* Lowercases all folders using `lowercase => array('file','folders')`
+* Converts underscores to hyphens on folders too with `underscore_to_hyphen => array('file','folders')`
+* Doesn't prepend class before file with `prepend_class => false`
+
 
 
 
