@@ -1,5 +1,5 @@
 {
-	"name": "pablo-pacheco/wp-namespace-autoloader",
+	"name": "pablo-sg-pacheco/wp-namespace-autoloader",
 	"type": "library",
 	"description": "A PHP autoloader class that follows the WordPress coding standards for class names and class filenames",
 	"keywords": [
