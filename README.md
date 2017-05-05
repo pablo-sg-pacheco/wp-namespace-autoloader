@@ -23,7 +23,7 @@ You just have to require it just like a composer default dependency. You may hav
 
 ```json
 "require": {	
-	"pablo-pacheco/wp-namespace-autoloader": "dev-master"
+	"pablo-sg-pacheco/wp-namespace-autoloader": "dev-master"
 },
 "config": {
 	"preferred-install": "dist"
