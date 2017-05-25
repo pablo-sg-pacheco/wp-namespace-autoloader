@@ -18,25 +18,26 @@ if ( ! class_exists( '\Pablo_Pacheco\WP_Namespace_Autoloader\WP_Namespace_Autolo
 		 *
 		 * Autoloads all your WordPress classes in a easy way
 		 *
-		 * @param array|string $args               {
-		 *                                         Array of arguments.
+		 * @param array|string $args                 {
+		 *                                           Array of arguments.
 		 *
-		 * @type string        $directory                Current directory. Use __DIR__.
-		 * @type string        $namespace_prefix         Main namespace of your project . Probably use __NAMESPACE__.
-		 * @type array         $lowercase                If you want to lowercase. It accepts an array with two possible values: 'file' | 'folders'
-		 * @type array         $underscore_to_hyphen     If you want to convert underscores to hyphens. It accepts an array with two possible values: 'file' | 'folders'
-		 * @type boolean       $prepend_class            If you want to prepend 'class-' before files
-		 * @type string        $classes_dir              Name of the directory containing all your classes (optional).
+		 * @type string        $directory            Current directory. Use __DIR__.
+		 * @type string        $namespace_prefix     Main namespace of your project . Probably use __NAMESPACE__.
+		 * @type array         $lowercase            If you want to lowercase. It accepts an array with two possible values: 'file' | 'folders'
+		 * @type array         $underscore_to_hyphen If you want to convert underscores to hyphens. It accepts an array with two possible values: 'file' | 'folders'
+		 * @type boolean       $prepend_class        If you want to prepend 'class-' before files
+		 * @type string        $classes_dir          Name of the directory containing all your classes (optional).
 		 * }
 		 */
 		function __construct( $args = array() ) {
 			$args = wp_parse_args( $args, array(
 				'directory'            => null,
 				'namespace_prefix'     => null,
-				'lowercase'            => array('file'), // 'file' | folders
-				'underscore_to_hyphen' => array('file'), // 'file' | folders
+				'lowercase'            => array( 'file' ), // 'file' | folders
+				'underscore_to_hyphen' => array( 'file' ), // 'file' | folders
 				'prepend_class'        => true,
 				'classes_dir'          => '',
+				'debug'                => false,
 			) );
 
 			$this->set_args( $args );
@@ -55,10 +56,14 @@ if ( ! class_exists( '\Pablo_Pacheco\WP_Namespace_Autoloader\WP_Namespace_Autolo
 			$args      = $this->get_args();
 			$namespace = $args['namespace_prefix'];
 
-			if ( false !== strpos( $class, $namespace ) ) {
-				if ( ! class_exists( $class ) ) {
-					return true;
+			if ( ! class_exists( $class ) ) {
+
+				if ( false !== strpos( $class, $namespace ) ) {
+					if ( ! class_exists( $class ) ) {
+						return true;
+					}
 				}
+
 			}
 
 			return false;
@@ -75,7 +80,10 @@ if ( ! class_exists( '\Pablo_Pacheco\WP_Namespace_Autoloader\WP_Namespace_Autolo
 				if ( file_exists( $file ) ) {
 					require_once $file;
 				} else {
-					error_log( 'WP Namespace Autoloader could not load file: ' . print_r( $file, true ) );
+					$args = $this->get_args();
+					if ( $args['debug'] ) {
+						error_log( 'WP Namespace Autoloader could not load file: ' . print_r( $file, true ) );
+					}
 				}
 			}
 		}
@@ -99,6 +107,7 @@ if ( ! class_exists( '\Pablo_Pacheco\WP_Namespace_Autoloader\WP_Namespace_Autolo
 		 * Gets only the path leading to final file based on namespace
 		 *
 		 * @param $class
+		 *
 		 * @return string
 		 */
 		private function get_namespace_file_path( $class ) {
@@ -126,8 +135,8 @@ if ( ! class_exists( '\Pablo_Pacheco\WP_Namespace_Autoloader\WP_Namespace_Autolo
 				$namespace_file_path = str_replace( array( '_', "\0" ), array( '-', '', ), $namespace_file_path );
 			}
 
-			if($namespace_file_path=='\\' || $namespace_file_path=='\/'){
-				$namespace_file_path='';
+			if ( $namespace_file_path == '\\' || $namespace_file_path == '\/' ) {
+				$namespace_file_path = '';
 			}
 
 			return $namespace_file_path;
@@ -137,6 +146,7 @@ if ( ! class_exists( '\Pablo_Pacheco\WP_Namespace_Autoloader\WP_Namespace_Autolo
 		 * Gets final file to be loaded considering WordPress coding standards
 		 *
 		 * @param $class
+		 *
 		 * @return string
 		 */
 		private function get_file_applying_wp_standards( $class ) {
@@ -174,6 +184,7 @@ if ( ! class_exists( '\Pablo_Pacheco\WP_Namespace_Autoloader\WP_Namespace_Autolo
 		 * Sanitizes file path
 		 *
 		 * @param $file_path
+		 *
 		 * @return string
 		 */
 		private function sanitize_file_path( $file_path ) {
@@ -186,6 +197,7 @@ if ( ! class_exists( '\Pablo_Pacheco\WP_Namespace_Autoloader\WP_Namespace_Autolo
 		 *
 		 * @param      $namespace
 		 * @param bool $add_backslash
+		 *
 		 * @return string
 		 */
 		private function sanitize_namespace( $namespace, $add_backslash = false ) {
@@ -201,6 +213,7 @@ if ( ! class_exists( '\Pablo_Pacheco\WP_Namespace_Autoloader\WP_Namespace_Autolo
 		 *
 		 * @param      $class
 		 * @param bool $check_loading_need
+		 *
 		 * @return bool|string
 		 */
 		public function convert_class_to_file( $class, $check_loading_need = false ) {
@@ -210,7 +223,7 @@ if ( ! class_exists( '\Pablo_Pacheco\WP_Namespace_Autoloader\WP_Namespace_Autolo
 				}
 			}
 
-			$dir                 = $this->get_dir();			
+			$dir                 = $this->get_dir();
 			$namespace_file_path = $this->get_namespace_file_path( $class );
 			$final_file          = $this->get_file_applying_wp_standards( $class );
 
