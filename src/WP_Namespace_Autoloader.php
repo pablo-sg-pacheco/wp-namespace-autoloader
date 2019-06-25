@@ -72,12 +72,12 @@ if ( ! class_exists( '\Pablo_Pacheco\WP_Namespace_Autoloader\WP_Namespace_Autolo
 		/**
 		 * Autoloads classes
 		 *
-		 * @param $class
+		 * @param string $class
 		 */
 		public function autoload( $class ) {
 			if ( $this->need_to_autoload( $class ) ) {
 				$file = $this->convert_class_to_file( $class );
-				if ( file_exists( $file ) ) {
+				if ( is_string( $file ) && file_exists( $file ) ) {
 					require_once $file;
 				} else {
 					$args = $this->get_args();
@@ -106,7 +106,7 @@ if ( ! class_exists( '\Pablo_Pacheco\WP_Namespace_Autoloader\WP_Namespace_Autolo
 		/**
 		 * Gets only the path leading to final file based on namespace
 		 *
-		 * @param $class
+		 * @param string $class
 		 *
 		 * @return string
 		 */
@@ -145,7 +145,7 @@ if ( ! class_exists( '\Pablo_Pacheco\WP_Namespace_Autoloader\WP_Namespace_Autolo
 		/**
 		 * Gets final file to be loaded considering WordPress coding standards
 		 *
-		 * @param $class
+		 * @param string $class
 		 *
 		 * @return string
 		 */
@@ -161,12 +161,12 @@ if ( ! class_exists( '\Pablo_Pacheco\WP_Namespace_Autoloader\WP_Namespace_Autolo
 			$final_file = array_pop( $namespaces_arr );
 
 			// Final file name
-			if ( in_array( "file", $args['lowercase'] ) ) {
+			if ( in_array( 'file', $args['lowercase'] ) ) {
 				$final_file = strtolower( $final_file );
 			}
 
 			// Final file with underscores replaced
-			if ( in_array( "file", $args['underscore_to_hyphen'] ) ) {
+			if ( in_array( 'file', $args['underscore_to_hyphen'] ) ) {
 				$final_file = str_replace( array( '_', "\0" ), array( '-', '', ), $final_file );
 			}
 
@@ -183,7 +183,7 @@ if ( ! class_exists( '\Pablo_Pacheco\WP_Namespace_Autoloader\WP_Namespace_Autolo
 		/**
 		 * Sanitizes file path
 		 *
-		 * @param $file_path
+		 * @param string $file_path
 		 *
 		 * @return string
 		 */
@@ -195,8 +195,8 @@ if ( ! class_exists( '\Pablo_Pacheco\WP_Namespace_Autoloader\WP_Namespace_Autolo
 		/**
 		 * Sanitizes namespace
 		 *
-		 * @param      $namespace
-		 * @param bool $add_backslash
+		 * @param string $namespace
+		 * @param bool   $add_backslash
 		 *
 		 * @return string
 		 */
@@ -211,8 +211,8 @@ if ( ! class_exists( '\Pablo_Pacheco\WP_Namespace_Autoloader\WP_Namespace_Autolo
 		/**
 		 * Converts a namespaced class in a file to be loaded
 		 *
-		 * @param      $class
-		 * @param bool $check_loading_need
+		 * @param string $class
+		 * @param bool   $check_loading_need
 		 *
 		 * @return bool|string
 		 */
