@@ -15,7 +15,7 @@ if ( ! class_exists( '\Pablo_Pacheco\WP_Namespace_Autoloader\WP_Namespace_Autolo
 		/**
 		 * Autoloader constructor.
 		 *
-		 * Autoloads all your WordPress classes in a easy way
+		 * Autoloads all your WordPress classes in an easy way
 		 *
 		 * @param array|string $args                 {
 		 *                                           Array of arguments.
@@ -98,7 +98,7 @@ if ( ! class_exists( '\Pablo_Pacheco\WP_Namespace_Autoloader\WP_Namespace_Autolo
 			$args = $this->get_args();
 			$dir  = $this->sanitize_file_path( $args['classes_dir'] );
 
-			// Directory containing all classes
+			// Directory containing all classes.
 			$classes_dir = empty( $dir ) ? '' : rtrim( $dir, DIRECTORY_SEPARATOR ) . DIRECTORY_SEPARATOR;
 
 			return untrailingslashit( $args['directory'] ) . DIRECTORY_SEPARATOR . $classes_dir;
@@ -115,14 +115,14 @@ if ( ! class_exists( '\Pablo_Pacheco\WP_Namespace_Autoloader\WP_Namespace_Autolo
 			$args             = $this->get_args();
 			$namespace_prefix = $args['namespace_prefix'];
 
-			// Sanitized class and namespace prefix
+			// Sanitized class and namespace prefix.
 			$sanitized_class            = $this->sanitize_namespace( $class, false );
 			$sanitized_namespace_prefix = $this->sanitize_namespace( $namespace_prefix, true );
 
-			// Removes prefix from class namespace
+			// Removes prefix from class namespace.
 			$namespace_without_prefix = str_replace( $sanitized_namespace_prefix, '', $sanitized_class );
 
-			// Gets namespace file path
+			// Gets namespace file path.
 			$namespaces_without_prefix_arr = explode( '\\', $namespace_without_prefix );
 
 			array_pop( $namespaces_without_prefix_arr );
@@ -153,27 +153,27 @@ if ( ! class_exists( '\Pablo_Pacheco\WP_Namespace_Autoloader\WP_Namespace_Autolo
 		private function get_file_applying_wp_standards( $class ) {
 			$args = $this->get_args();
 
-			// Sanitized class and namespace prefix
+			// Sanitized class and namespace prefix.
 			$sanitized_class = $this->sanitize_namespace( $class, false );
 
-			// Gets namespace file path
+			// Gets namespace file path.
 			$namespaces_arr = explode( '\\', $sanitized_class );
 
 			$final_file = array_pop( $namespaces_arr );
 
-			// Final file name
+			// Final file name.
 			if ( in_array( 'file', $args['lowercase'] ) ) {
 				$final_file = strtolower( $final_file );
 			}
 
-			// Final file with underscores replaced
+			// Final file with underscores replaced.
 			if ( in_array( 'file', $args['underscore_to_hyphen'] ) ) {
 				$final_file = str_replace( array( '_', "\0" ), array( '-', '' ), $final_file );
 			}
 
 			$final_file .= '.php';
 
-			// Prepend class
+			// Prepend class.
 			if ( $args['prepend_class'] ) {
 				$final_file = 'class-' . $final_file;
 			}
