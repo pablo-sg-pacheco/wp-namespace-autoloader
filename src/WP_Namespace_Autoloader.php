@@ -3,6 +3,9 @@
  * Autoloader - Main class
  *
  * @author  Pablo dos S G Pacheco
+ *
+ * phpcs:disable WordPress.PHP.DevelopmentFunctions.error_log_error_log
+ * phpcs:disable WordPress.PHP.DevelopmentFunctions.error_log_print_r
  */
 
 namespace Pablo_Pacheco\WP_Namespace_Autoloader;
