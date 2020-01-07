@@ -7,7 +7,6 @@
 
 namespace Pablo_Pacheco\WP_Namespace_Autoloader;
 
-
 if ( ! class_exists( '\Pablo_Pacheco\WP_Namespace_Autoloader\WP_Namespace_Autoloader' ) ) {
 	class WP_Namespace_Autoloader {
 
@@ -30,15 +29,18 @@ if ( ! class_exists( '\Pablo_Pacheco\WP_Namespace_Autoloader\WP_Namespace_Autolo
 		 * }
 		 */
 		function __construct( $args = array() ) {
-			$args = wp_parse_args( $args, array(
-				'directory'            => null,
-				'namespace_prefix'     => null,
-				'lowercase'            => array( 'file' ), // 'file' | folders
-				'underscore_to_hyphen' => array( 'file' ), // 'file' | folders
-				'prepend_class'        => true,
-				'classes_dir'          => '',
-				'debug'                => false,
-			) );
+			$args = wp_parse_args(
+				$args,
+				array(
+					'directory'            => null,
+					'namespace_prefix'     => null,
+					'lowercase'            => array( 'file' ), // 'file' | folders
+					'underscore_to_hyphen' => array( 'file' ), // 'file' | folders
+					'prepend_class'        => true,
+					'classes_dir'          => '',
+					'debug'                => false,
+				)
+			);
 
 			$this->set_args( $args );
 		}
@@ -63,7 +65,6 @@ if ( ! class_exists( '\Pablo_Pacheco\WP_Namespace_Autoloader\WP_Namespace_Autolo
 						return true;
 					}
 				}
-
 			}
 
 			return false;
@@ -127,12 +128,12 @@ if ( ! class_exists( '\Pablo_Pacheco\WP_Namespace_Autoloader\WP_Namespace_Autolo
 			array_pop( $namespaces_without_prefix_arr );
 			$namespace_file_path = implode( DIRECTORY_SEPARATOR, $namespaces_without_prefix_arr ) . DIRECTORY_SEPARATOR;
 
-			if ( in_array( "folders", $args['lowercase'] ) ) {
+			if ( in_array( 'folders', $args['lowercase'] ) ) {
 				$namespace_file_path = strtolower( $namespace_file_path );
 			}
 
-			if ( in_array( "folders", $args['underscore_to_hyphen'] ) ) {
-				$namespace_file_path = str_replace( array( '_', "\0" ), array( '-', '', ), $namespace_file_path );
+			if ( in_array( 'folders', $args['underscore_to_hyphen'] ) ) {
+				$namespace_file_path = str_replace( array( '_', "\0" ), array( '-', '' ), $namespace_file_path );
 			}
 
 			if ( $namespace_file_path == '\\' || $namespace_file_path == '\/' ) {
@@ -167,7 +168,7 @@ if ( ! class_exists( '\Pablo_Pacheco\WP_Namespace_Autoloader\WP_Namespace_Autolo
 
 			// Final file with underscores replaced
 			if ( in_array( 'file', $args['underscore_to_hyphen'] ) ) {
-				$final_file = str_replace( array( '_', "\0" ), array( '-', '', ), $final_file );
+				$final_file = str_replace( array( '_', "\0" ), array( '-', '' ), $final_file );
 			}
 
 			$final_file .= '.php';
