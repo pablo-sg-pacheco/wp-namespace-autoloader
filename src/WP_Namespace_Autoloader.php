@@ -128,11 +128,11 @@ if ( ! class_exists( '\Pablo_Pacheco\WP_Namespace_Autoloader\WP_Namespace_Autolo
 			array_pop( $namespaces_without_prefix_arr );
 			$namespace_file_path = implode( DIRECTORY_SEPARATOR, $namespaces_without_prefix_arr ) . DIRECTORY_SEPARATOR;
 
-			if ( in_array( 'folders', $args['lowercase'] ) ) {
+			if ( in_array( 'folders', $args['lowercase'], true ) ) {
 				$namespace_file_path = strtolower( $namespace_file_path );
 			}
 
-			if ( in_array( 'folders', $args['underscore_to_hyphen'] ) ) {
+			if ( in_array( 'folders', $args['underscore_to_hyphen'], true ) ) {
 				$namespace_file_path = str_replace( array( '_', "\0" ), array( '-', '' ), $namespace_file_path );
 			}
 
@@ -162,12 +162,12 @@ if ( ! class_exists( '\Pablo_Pacheco\WP_Namespace_Autoloader\WP_Namespace_Autolo
 			$final_file = array_pop( $namespaces_arr );
 
 			// Final file name.
-			if ( in_array( 'file', $args['lowercase'] ) ) {
+			if ( in_array( 'file', $args['lowercase'], true ) ) {
 				$final_file = strtolower( $final_file );
 			}
 
 			// Final file with underscores replaced.
-			if ( in_array( 'file', $args['underscore_to_hyphen'] ) ) {
+			if ( in_array( 'file', $args['underscore_to_hyphen'], true ) ) {
 				$final_file = str_replace( array( '_', "\0" ), array( '-', '' ), $final_file );
 			}
 
