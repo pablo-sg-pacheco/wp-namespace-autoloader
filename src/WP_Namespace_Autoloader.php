@@ -28,7 +28,7 @@ if ( ! class_exists( '\Pablo_Pacheco\WP_Namespace_Autoloader\WP_Namespace_Autolo
 		 * @type string        $classes_dir          Name of the directory containing all your classes (optional).
 		 * }
 		 */
-		function __construct( $args = array() ) {
+		public function __construct( $args = array() ) {
 			$args = wp_parse_args(
 				$args,
 				array(
