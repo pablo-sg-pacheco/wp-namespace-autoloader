@@ -47,8 +47,6 @@ if ( ! class_exists( '\Pablo_Pacheco\WP_Namespace_Autoloader\WP_Namespace_Autolo
 
 		/**
 		 * Register autoloader
-		 *
-		 * @return string
 		 */
 		public function init() {
 			spl_autoload_register( array( $this, 'autoload' ) );
