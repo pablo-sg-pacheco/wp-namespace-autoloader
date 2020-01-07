@@ -136,7 +136,7 @@ if ( ! class_exists( '\Pablo_Pacheco\WP_Namespace_Autoloader\WP_Namespace_Autolo
 				$namespace_file_path = str_replace( array( '_', "\0" ), array( '-', '' ), $namespace_file_path );
 			}
 
-			if ( $namespace_file_path === '\\' || $namespace_file_path === '\/' ) {
+			if ( '\\' === $namespace_file_path || '\/' === $namespace_file_path ) {
 				$namespace_file_path = '';
 			}
 
