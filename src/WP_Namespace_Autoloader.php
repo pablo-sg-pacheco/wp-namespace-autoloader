@@ -36,7 +36,7 @@ if ( ! class_exists( '\Pablo_Pacheco\WP_Namespace_Autoloader\WP_Namespace_Autolo
 				'lowercase'            => array( 'file' ), // 'file' | folders
 				'underscore_to_hyphen' => array( 'file' ), // 'file' | folders
 				'prepend_class'        => true,
-				'classes_dir'          => '',
+				'classes_dir'          => array( '.', 'vendor' ),
 				'debug'                => false,
 			) );
 
