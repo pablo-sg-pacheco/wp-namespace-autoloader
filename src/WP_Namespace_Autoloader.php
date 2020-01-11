@@ -56,7 +56,7 @@ if ( ! class_exists( '\Pablo_Pacheco\WP_Namespace_Autoloader\WP_Namespace_Autolo
 			$args      = $this->get_args();
 			$namespace = $args['namespace_prefix'];
 
-			if ( ! class_exists( $class ) ) {
+			if ( ! class_exists( $class ) && ! interface_exists( $class ) ) {
 
 				if ( false !== strpos( $class, $namespace ) ) {
 					if ( ! class_exists( $class ) ) {
@@ -170,12 +170,20 @@ if ( ! class_exists( '\Pablo_Pacheco\WP_Namespace_Autoloader\WP_Namespace_Autolo
 				$final_file = str_replace( array( '_', "\0" ), array( '-', '', ), $final_file );
 			}
 
-			$final_file .= '.php';
-
 			// Prepend class
 			if ( $args['prepend_class'] ) {
-				$final_file = 'class-' . $final_file;
+				$prepended = preg_replace( '/(.*)-interface$/', 'interface-$1', $final_file );
+				$prepended = preg_replace( '/(.*)-abstract$/', 'abstract-$1', $prepended );
+
+				// If no changes were made when looking for interfaces and abstract classes, prepend "class-".
+				if ( $prepended === $final_file ) {
+					$final_file = 'class-' . $final_file;
+				} else {
+					$final_file = $prepended;
+				}
 			}
+
+			$final_file .= '.php';
 
 			return $final_file;
 		}
