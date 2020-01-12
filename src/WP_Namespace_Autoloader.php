@@ -30,7 +30,7 @@ if ( ! class_exists( '\Pablo_Pacheco\WP_Namespace_Autoloader\WP_Namespace_Autolo
 		 * }
 		 */
 		function __construct( $args = array() ) {
-			$args = wp_parse_args( $args, array(
+			$defaults = array(
 				'directory'            => null,
 				'namespace_prefix'     => null,
 				'lowercase'            => array( 'file' ), // 'file' | folders
@@ -38,9 +38,11 @@ if ( ! class_exists( '\Pablo_Pacheco\WP_Namespace_Autoloader\WP_Namespace_Autolo
 				'prepend_class'        => true,
 				'classes_dir'          => array( '.', 'vendor' ),
 				'debug'                => false,
-			) );
+			);
 
-			$this->set_args( $args );
+			$parsed_args = array_merge( $defaults, $args );
+
+			$this->set_args( $parsed_args );
 		}
 
 		/**
@@ -122,8 +124,7 @@ if ( ! class_exists( '\Pablo_Pacheco\WP_Namespace_Autoloader\WP_Namespace_Autolo
 				// Directory containing all classes
 				$classes_dir = empty( $dir ) ? '' : rtrim( $dir, DIRECTORY_SEPARATOR ) . DIRECTORY_SEPARATOR;
 
-				return untrailingslashit( $args['directory'] ) . DIRECTORY_SEPARATOR . $classes_dir;
-			}
+			  return rtrim( $args['directory'], '/\\' ) . DIRECTORY_SEPARATOR . $classes_dir;
 
 		}
 
