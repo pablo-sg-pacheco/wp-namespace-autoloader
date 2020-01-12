@@ -68,9 +68,9 @@ class Main_Page{
 
 Parameter | Default value | Description
 ------------ | ------------- | ------------
-**directory** | `dirname()` of the file that instantiates WP\_Namespace\_Autoloader | Path of your project. Probably use **```__DIR__```** here
-**namespace_prefix** | ```__NAMESPACE__``` of the file that instantiates WP\_Namespace\_Autoloader | Namespace prefix of your project
-**classes_dir** | ```''``` | Relative path of the directory containing all your classes **(optional)**.
+**directory** | ```null``` | Path of your project. Probably use **```__DIR__```** here
+**namespace_prefix** | ```null``` | Namespace prefix of your project
+**classes_dir** | ```array( '.', 'vendor' )``` | Relative path of the directory containing all your classes. Accepts string or array of strings. Defaults to **`directory`** parameter and the vendor subdirectory.  **(optional)**.
 **lowercase** | ```array('file')``` | If you want to lowercase just the file or folders too. It accepts an array with two possible values: **'file', 'folders'**.
 **underscore_to_hyphen** | ```array('file')``` | If you want to convert underscores to hyphens. It accepts an array with two possible values: **'file',  'folders'**.
 **prepend_class** | ```true``` | If you want to prepend 'class-' before files
