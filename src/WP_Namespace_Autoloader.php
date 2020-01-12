@@ -31,8 +31,8 @@ if ( ! class_exists( '\Pablo_Pacheco\WP_Namespace_Autoloader\WP_Namespace_Autolo
 		 */
 		function __construct( $args = array() ) {
 			$defaults = array(
-				'directory'            => null,
-				'namespace_prefix'     => null,
+				'directory'            => $this->get_calling_directory(),
+				'namespace_prefix'     => $this->get_calling_file_namespace(),
 				'lowercase'            => array( 'file' ), // 'file' | folders
 				'underscore_to_hyphen' => array( 'file' ), // 'file' | folders
 				'prepend_class'        => true,
@@ -274,6 +274,46 @@ if ( ! class_exists( '\Pablo_Pacheco\WP_Namespace_Autoloader\WP_Namespace_Autolo
 			}
 
 			return $class_files;
+		}
+
+		/**
+		 * Get the directory of the file that instantiated this class.
+		 */
+		public function get_calling_directory() {
+
+			$debug_backtrace = debug_backtrace();
+
+			// [0] is the __construct function, [1] is who called it.
+			$calling_file = $debug_backtrace[1]['file'];
+
+			$calling_directory = dirname( $calling_file );
+
+			return $calling_directory;
+		}
+
+		/**
+		 * Get the namespace of the file that instantiated this class, presumably the root namespace.
+		 */
+		protected function get_calling_file_namespace() {
+
+			$debug_backtrace = debug_backtrace();
+
+			// [0] is the __construct function, [1] is who called it.
+			$calling_file = $debug_backtrace[1]['file'];
+
+			$calling_namespace = null;
+			$handle = fopen($calling_file, "r");
+			if ($handle) {
+				while (false !== ($line = fgets($handle))) {
+					if (0 === strpos($line, 'namespace')) {
+						$parts = explode(' ', $line);
+						$calling_namespace = rtrim(trim($parts[1]), ';');
+						break;
+					}
+				}
+				fclose($handle);
+			}
+			return $calling_namespace;
 		}
 
 		/**

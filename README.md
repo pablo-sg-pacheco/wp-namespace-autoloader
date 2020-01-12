@@ -45,8 +45,8 @@ Now you have to initialize it and you are good to go
 <?php
 use Pablo_Pacheco\WP_Namespace_Autoloader\WP_Namespace_Autoloader;
 $autoloader = new \WP_Namespace_Autoloader( array(    
-	'directory'          => __DIR__,       // Directory of your project. It can be your theme or plugin. __DIR__ is probably your best bet. 	
-	'namespace_prefix'   => 'My_Project', // Main namespace of your project. E.g My_Project\Admin\Tests should be My_Project. Probably if you just pass the constant __NAMESPACE__ it should work		
+	'directory'          => __DIR__,       // Directory of your project. It can be your theme or plugin. Defaults to __DIR__ (probably your best bet). 	
+	'namespace_prefix'   => 'My_Project', // Main namespace of your project. E.g My_Project\Admin\Tests should be My_Project. Defaults to the namespace of the instantiating file.	
 	'classes_dir'        => 'src',         // (optional). It is where your namespaced classes are located inside your project. If your classes are in the root level, leave this empty. If they are located on 'src' folder, write 'src' here 
 ) );
 $autoloader->init();
