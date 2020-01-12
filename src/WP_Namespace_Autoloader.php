@@ -31,7 +31,7 @@ if ( ! class_exists( '\Pablo_Pacheco\WP_Namespace_Autoloader\WP_Namespace_Autolo
 		 */
 		function __construct( $args = array() ) {
 			$args = wp_parse_args( $args, array(
-				'directory'            => null,
+				'directory'            => $this->get_calling_directory(),
 				'namespace_prefix'     => $this->get_calling_file_namespace(),
 				'lowercase'            => array( 'file' ), // 'file' | folders
 				'underscore_to_hyphen' => array( 'file' ), // 'file' | folders
@@ -229,7 +229,22 @@ if ( ! class_exists( '\Pablo_Pacheco\WP_Namespace_Autoloader\WP_Namespace_Autolo
 
 			return $dir . $namespace_file_path . $final_file;
 		}
-		
+
+		/**
+		 * Get the directory of the file that instantiated this class.
+		 */
+		public function get_calling_directory() {
+
+			$debug_backtrace = debug_backtrace();
+
+			// [0] is the __construct function, [1] is who called it.
+			$calling_file = $debug_backtrace[1]['file'];
+
+			$calling_directory = dirname( $calling_file );
+
+			return $calling_directory;
+		}
+
 		/**
 		 * Get the namespace of the file that instantiated this class, presumably the root namespace.
 		 */
