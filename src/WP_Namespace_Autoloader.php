@@ -124,8 +124,8 @@ if ( ! class_exists( '\Pablo_Pacheco\WP_Namespace_Autoloader\WP_Namespace_Autolo
 				// Directory containing all classes
 				$classes_dir = empty( $dir ) ? '' : rtrim( $dir, DIRECTORY_SEPARATOR ) . DIRECTORY_SEPARATOR;
 
-			  return rtrim( $args['directory'], '/\\' ) . DIRECTORY_SEPARATOR . $classes_dir;
-
+				return rtrim( $args['directory'], '/\\' ) . DIRECTORY_SEPARATOR . $classes_dir;
+			}
 		}
 
 		/**
