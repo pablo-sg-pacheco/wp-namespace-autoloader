@@ -24,7 +24,7 @@ if ( ! class_exists( '\Pablo_Pacheco\WP_Namespace_Autoloader\WP_Namespace_Autolo
 	class WP_Namespace_Autoloader {
 
 		/**
-		 * The autolaoder settings.
+		 * The autoloader settings.
 		 *
 		 * @var array Associative array of settings as detailed in the constructor PHPDoc.
 		 */
