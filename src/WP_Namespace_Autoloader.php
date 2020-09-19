@@ -1,8 +1,11 @@
 <?php
 /**
- * Autoloader - Main class
+ * A PHP autoloader class that follows the WordPress coding standards applying PSR-4 specification.
+ *
+ * @see https://developer.wordpress.org/coding-standards/wordpress-coding-standards/php/
  *
  * @author  Pablo dos S G Pacheco
+ * @package pablo-sg-pacheco/wp-namespace-autoloader
  *
  * phpcs:disable WordPress.PHP.DevelopmentFunctions.error_log_error_log
  * phpcs:disable WordPress.PHP.DevelopmentFunctions.error_log_print_r
@@ -11,9 +14,21 @@
 namespace Pablo_Pacheco\WP_Namespace_Autoloader;
 
 if ( ! class_exists( '\Pablo_Pacheco\WP_Namespace_Autoloader\WP_Namespace_Autoloader' ) ) {
+	/**
+	 * Autoloader - Main class
+	 *
+	 * Class WP_Namespace_Autoloader
+	 *
+	 * @package Pablo_Pacheco\WP_Namespace_Autoloader
+	 */
 	class WP_Namespace_Autoloader {
 
-		private $args;
+		/**
+		 * The autolaoder settings.
+		 *
+		 * @var array Associative array of settings as detailed in the constructor PHPDoc.
+		 */
+		private $args = array();
 
 		/**
 		 * Autoloader constructor.
@@ -55,6 +70,13 @@ if ( ! class_exists( '\Pablo_Pacheco\WP_Namespace_Autoloader\WP_Namespace_Autolo
 			spl_autoload_register( array( $this, 'autoload' ) );
 		}
 
+		/**
+		 * Determine if the class has already been loaded.
+		 *
+		 * @param string $class classFQN.
+		 *
+		 * @return bool
+		 */
 		public function need_to_autoload( $class ) {
 			$args      = $this->get_args();
 			$namespace = $args['namespace_prefix'];
@@ -74,7 +96,7 @@ if ( ! class_exists( '\Pablo_Pacheco\WP_Namespace_Autoloader\WP_Namespace_Autolo
 		/**
 		 * Autoloads classes
 		 *
-		 * @param string $class
+		 * @param string $class classFQN.
 		 */
 		public function autoload( $class ) {
 			if ( $this->need_to_autoload( $class ) ) {
@@ -108,7 +130,7 @@ if ( ! class_exists( '\Pablo_Pacheco\WP_Namespace_Autoloader\WP_Namespace_Autolo
 		/**
 		 * Gets only the path leading to final file based on namespace
 		 *
-		 * @param string $class
+		 * @param string $class classFQN.
 		 *
 		 * @return string
 		 */
@@ -145,9 +167,11 @@ if ( ! class_exists( '\Pablo_Pacheco\WP_Namespace_Autoloader\WP_Namespace_Autolo
 		}
 
 		/**
-		 * Gets final file to be loaded considering WordPress coding standards
+		 * Gets filename to be loaded considering WordPress coding standards
 		 *
-		 * @param string $class
+		 * Takes className or end of classFQN and converts it to WPCS "class-" prefixed filename.
+		 *
+		 * @param string $class className or classFNQ.
 		 *
 		 * @return string
 		 */
@@ -183,9 +207,10 @@ if ( ! class_exists( '\Pablo_Pacheco\WP_Namespace_Autoloader\WP_Namespace_Autolo
 		}
 
 		/**
-		 * Sanitizes file path
+		 * Sanitizes file path.
+		 * Removes leading and trailing / (DIRECTORY_SEPARATOR).
 		 *
-		 * @param string $file_path
+		 * @param string $file_path File path.
 		 *
 		 * @return string
 		 */
@@ -195,10 +220,10 @@ if ( ! class_exists( '\Pablo_Pacheco\WP_Namespace_Autoloader\WP_Namespace_Autolo
 
 
 		/**
-		 * Sanitizes namespace
+		 * Sanitizes namespace or classFQN
 		 *
-		 * @param string $namespace
-		 * @param bool   $add_backslash
+		 * @param string $namespace Namespace or classFQN to sanitize.
+		 * @param bool   $add_backslash Add a trailing backslash.
 		 *
 		 * @return string
 		 */
@@ -213,10 +238,10 @@ if ( ! class_exists( '\Pablo_Pacheco\WP_Namespace_Autoloader\WP_Namespace_Autolo
 		/**
 		 * Converts a namespaced class in a file to be loaded
 		 *
-		 * @param string $class
-		 * @param bool   $check_loading_need
+		 * @param string $class classFQN.
+		 * @param bool   $check_loading_need Should short circuit if already loaded.
 		 *
-		 * @return bool|string
+		 * @return bool|string false|Full filepath.
 		 */
 		public function convert_class_to_file( $class, $check_loading_need = false ) {
 			if ( $check_loading_need ) {
@@ -233,14 +258,18 @@ if ( ! class_exists( '\Pablo_Pacheco\WP_Namespace_Autoloader\WP_Namespace_Autolo
 		}
 
 		/**
-		 * @return mixed
+		 * Getter for autoloader settings.
+		 *
+		 * @return array Associative array of settings as detailed in the constructor PHPDoc.
 		 */
 		public function get_args() {
 			return $this->args;
 		}
 
 		/**
-		 * @param mixed $args
+		 * Setter for autoloader settings.
+		 *
+		 * @param array $args Associative array of settings as detailed in the constructor PHPDoc.
 		 */
 		public function set_args( $args ) {
 			$this->args = $args;
