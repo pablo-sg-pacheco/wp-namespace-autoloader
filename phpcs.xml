@@ -3,6 +3,10 @@
     <description>Generally-applicable sniffs for WordPress plugins</description>
 
     <rule ref="WordPress">
+
+        <!-- The file needs to be in PSR-4 format to be autoloaded. -->
+        <exclude name="WordPress.Files.FileName.NotHyphenatedLowercase"/>
+        <exclude name="WordPress.Files.FileName.InvalidClassFileName"/>
     </rule>
 
     <!-- Check all PHP files in directory tree by default. -->
@@ -15,5 +19,6 @@
     <exclude-pattern>./vendor/*</exclude-pattern>
 
     <config name="minimum_supported_wp_version" value="5.0"/>
+
 
 </ruleset>
