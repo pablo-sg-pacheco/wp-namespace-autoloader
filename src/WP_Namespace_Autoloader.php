@@ -1,22 +1,39 @@
 <?php
 /**
- * Autoloader - Main class
+ * A PHP autoloader class that follows the WordPress coding standards applying PSR-4 specification.
+ *
+ * @see https://developer.wordpress.org/coding-standards/wordpress-coding-standards/php/
  *
  * @author  Pablo dos S G Pacheco
+ * @package pablo-sg-pacheco/wp-namespace-autoloader
+ *
+ * phpcs:disable WordPress.PHP.DevelopmentFunctions.error_log_error_log
+ * phpcs:disable WordPress.PHP.DevelopmentFunctions.error_log_print_r
  */
 
 namespace Pablo_Pacheco\WP_Namespace_Autoloader;
 
-
 if ( ! class_exists( '\Pablo_Pacheco\WP_Namespace_Autoloader\WP_Namespace_Autoloader' ) ) {
+	/**
+	 * Autoloader - Main class
+	 *
+	 * Class WP_Namespace_Autoloader
+	 *
+	 * @package Pablo_Pacheco\WP_Namespace_Autoloader
+	 */
 	class WP_Namespace_Autoloader {
 
-		private $args;
+		/**
+		 * The autoloader settings.
+		 *
+		 * @var array Associative array of settings as detailed in the constructor PHPDoc.
+		 */
+		private $args = array();
 
 		/**
 		 * Autoloader constructor.
 		 *
-		 * Autoloads all your WordPress classes in a easy way
+		 * Autoloads all your WordPress classes in an easy way
 		 *
 		 * @param array|string $args                 {
 		 *                                           Array of arguments.
@@ -29,7 +46,8 @@ if ( ! class_exists( '\Pablo_Pacheco\WP_Namespace_Autoloader\WP_Namespace_Autolo
 		 * @type string|array  $classes_dir          Name of the directories containing all your classes (optional).
 		 * }
 		 */
-		function __construct( $args = array() ) {
+		public function __construct( $args = array() ) {
+
 			$defaults = array(
 				'directory'            => $this->get_calling_directory(),
 				'namespace_prefix'     => $this->get_calling_file_namespace(),
@@ -47,13 +65,18 @@ if ( ! class_exists( '\Pablo_Pacheco\WP_Namespace_Autoloader\WP_Namespace_Autolo
 
 		/**
 		 * Register autoloader
-		 *
-		 * @return string
 		 */
 		public function init() {
 			spl_autoload_register( array( $this, 'autoload' ) );
 		}
 
+		/**
+		 * Determine if the class has already been loaded.
+		 *
+		 * @param string $class classFQN.
+		 *
+		 * @return bool
+		 */
 		public function need_to_autoload( $class ) {
 			$args      = $this->get_args();
 			$namespace = $args['namespace_prefix'];
@@ -65,7 +88,6 @@ if ( ! class_exists( '\Pablo_Pacheco\WP_Namespace_Autoloader\WP_Namespace_Autolo
 						return true;
 					}
 				}
-
 			}
 
 			return false;
@@ -74,12 +96,12 @@ if ( ! class_exists( '\Pablo_Pacheco\WP_Namespace_Autoloader\WP_Namespace_Autolo
 		/**
 		 * Autoloads classes
 		 *
-		 * @param string $class
+		 * @param string $class classFQN.
 		 */
 		public function autoload( $class ) {
 			if ( $this->need_to_autoload( $class ) ) {
 				$file_paths = $this->convert_class_to_file( $class );
-				foreach( $file_paths as $file ) {
+				foreach ( $file_paths as $file ) {
 					if ( file_exists( $file ) ) {
 						require_once $file;
 						return;
@@ -90,7 +112,6 @@ if ( ! class_exists( '\Pablo_Pacheco\WP_Namespace_Autoloader\WP_Namespace_Autolo
 				if ( $args['debug'] ) {
 					error_log( 'WP Namespace Autoloader could not load file: ' . print_r( $file_paths, true ) );
 				}
-
 			}
 		}
 
@@ -102,11 +123,11 @@ if ( ! class_exists( '\Pablo_Pacheco\WP_Namespace_Autoloader\WP_Namespace_Autolo
 		private function get_dir() {
 			$args = $this->get_args();
 
-			if( is_array( $args['classes_dir'] ) ) {
+			if ( is_array( $args['classes_dir'] ) ) {
 
 				$dirs = array();
 
-				foreach( $args['classes_dir']  as $classes_dir ) {
+				foreach ( $args['classes_dir']  as $classes_dir ) {
 
 					$dir = $this->sanitize_file_path( $classes_dir );
 
@@ -119,9 +140,9 @@ if ( ! class_exists( '\Pablo_Pacheco\WP_Namespace_Autoloader\WP_Namespace_Autolo
 
 			} else {
 
-				$dir  = $this->sanitize_file_path( $args['classes_dir'] );
+				$dir = $this->sanitize_file_path( $args['classes_dir'] );
 
-				// Directory containing all classes
+				// Directory containing all classes.
 				$classes_dir = empty( $dir ) ? '' : rtrim( $dir, DIRECTORY_SEPARATOR ) . DIRECTORY_SEPARATOR;
 
 				return rtrim( $args['directory'], '/\\' ) . DIRECTORY_SEPARATOR . $classes_dir;
@@ -131,7 +152,7 @@ if ( ! class_exists( '\Pablo_Pacheco\WP_Namespace_Autoloader\WP_Namespace_Autolo
 		/**
 		 * Gets only the path leading to final file based on namespace
 		 *
-		 * @param string $class
+		 * @param string $class classFQN.
 		 *
 		 * @return string
 		 */
@@ -139,28 +160,28 @@ if ( ! class_exists( '\Pablo_Pacheco\WP_Namespace_Autoloader\WP_Namespace_Autolo
 			$args             = $this->get_args();
 			$namespace_prefix = $args['namespace_prefix'];
 
-			// Sanitized class and namespace prefix
+			// Sanitized class and namespace prefix.
 			$sanitized_class            = $this->sanitize_namespace( $class, false );
 			$sanitized_namespace_prefix = $this->sanitize_namespace( $namespace_prefix, true );
 
-			// Removes prefix from class namespace
+			// Removes prefix from class namespace.
 			$namespace_without_prefix = str_replace( $sanitized_namespace_prefix, '', $sanitized_class );
 
-			// Gets namespace file path
+			// Gets namespace file path.
 			$namespaces_without_prefix_arr = explode( '\\', $namespace_without_prefix );
 
 			array_pop( $namespaces_without_prefix_arr );
 			$namespace_file_path = implode( DIRECTORY_SEPARATOR, $namespaces_without_prefix_arr ) . DIRECTORY_SEPARATOR;
 
-			if ( in_array( "folders", $args['lowercase'] ) ) {
+			if ( in_array( 'folders', $args['lowercase'], true ) ) {
 				$namespace_file_path = strtolower( $namespace_file_path );
 			}
 
-			if ( in_array( "folders", $args['underscore_to_hyphen'] ) ) {
-				$namespace_file_path = str_replace( array( '_', "\0" ), array( '-', '', ), $namespace_file_path );
+			if ( in_array( 'folders', $args['underscore_to_hyphen'], true ) ) {
+				$namespace_file_path = str_replace( array( '_', "\0" ), array( '-', '' ), $namespace_file_path );
 			}
 
-			if ( $namespace_file_path == '\\' || $namespace_file_path == '\/' ) {
+			if ( '\\' === $namespace_file_path || '\/' === $namespace_file_path ) {
 				$namespace_file_path = '';
 			}
 
@@ -168,34 +189,36 @@ if ( ! class_exists( '\Pablo_Pacheco\WP_Namespace_Autoloader\WP_Namespace_Autolo
 		}
 
 		/**
-		 * Gets final file to be loaded considering WordPress coding standards
+		 * Gets filename to be loaded considering WordPress coding standards
 		 *
-		 * @param string $class
+		 * Takes className or end of classFQN and converts it to WPCS "class-" prefixed filename.
+		 *
+		 * @param string $class className or classFNQ.
 		 *
 		 * @return string
 		 */
 		private function get_file_applying_wp_standards( $class ) {
 			$args = $this->get_args();
 
-			// Sanitized class and namespace prefix
+			// Sanitized class and namespace prefix.
 			$sanitized_class = $this->sanitize_namespace( $class, false );
 
-			// Gets namespace file path
+			// Gets namespace file path.
 			$namespaces_arr = explode( '\\', $sanitized_class );
 
 			$final_file = array_pop( $namespaces_arr );
 
-			// Final file name
-			if ( in_array( 'file', $args['lowercase'] ) ) {
+			// Final file name.
+			if ( in_array( 'file', $args['lowercase'], true ) ) {
 				$final_file = strtolower( $final_file );
 			}
 
-			// Final file with underscores replaced
-			if ( in_array( 'file', $args['underscore_to_hyphen'] ) ) {
-				$final_file = str_replace( array( '_', "\0" ), array( '-', '', ), $final_file );
+			// Final file with underscores replaced.
+			if ( in_array( 'file', $args['underscore_to_hyphen'], true ) ) {
+				$final_file = str_replace( array( '_', "\0" ), array( '-', '' ), $final_file );
 			}
 
-			// Prepend class
+			// Prepend class.
 			if ( $args['prepend_class'] ) {
 				$prepended = preg_replace( '/(.*)-interface$/', 'interface-$1', $final_file );
 				$prepended = preg_replace( '/(.*)-abstract$/', 'abstract-$1', $prepended );
@@ -214,9 +237,10 @@ if ( ! class_exists( '\Pablo_Pacheco\WP_Namespace_Autoloader\WP_Namespace_Autolo
 		}
 
 		/**
-		 * Sanitizes file path
+		 * Sanitizes file path.
+		 * Removes leading and trailing / (DIRECTORY_SEPARATOR).
 		 *
-		 * @param string $file_path
+		 * @param string $file_path File path.
 		 *
 		 * @return string
 		 */
@@ -226,10 +250,10 @@ if ( ! class_exists( '\Pablo_Pacheco\WP_Namespace_Autoloader\WP_Namespace_Autolo
 
 
 		/**
-		 * Sanitizes namespace
+		 * Sanitizes namespace or classFQN
 		 *
-		 * @param string $namespace
-		 * @param bool   $add_backslash
+		 * @param string $namespace Namespace or classFQN to sanitize.
+		 * @param bool   $add_backslash Add a trailing backslash.
 		 *
 		 * @return string
 		 */
@@ -244,8 +268,8 @@ if ( ! class_exists( '\Pablo_Pacheco\WP_Namespace_Autoloader\WP_Namespace_Autolo
 		/**
 		 * Converts a namespaced class in a file to be loaded
 		 *
-		 * @param string $class
-		 * @param bool   $check_loading_need
+		 * @param string $class classFQN.
+		 * @param bool   $check_loading_need Should short circuit if already loaded.
 		 *
 		 * @return array();
 		 */
@@ -261,14 +285,13 @@ if ( ! class_exists( '\Pablo_Pacheco\WP_Namespace_Autoloader\WP_Namespace_Autolo
 
 			$class_files = array();
 
-			$dir                 = $this->get_dir();
+			$dir = $this->get_dir();
 
-			if( is_array( $dir ) ) {
+			if ( is_array( $dir ) ) {
 
-				foreach( $dir as $class_dir ) {
+				foreach ( $dir as $class_dir ) {
 					$class_files[] = $class_dir . $namespace_file_path . $final_file;
 				}
-
 			} else {
 				$class_files[] = $dir . $namespace_file_path . $final_file;
 			}
@@ -278,6 +301,8 @@ if ( ! class_exists( '\Pablo_Pacheco\WP_Namespace_Autoloader\WP_Namespace_Autolo
 
 		/**
 		 * Get the directory of the file that instantiated this class.
+		 *
+		 * phpcs:disable WordPress.PHP.DevelopmentFunctions.error_log_debug_backtrace
 		 */
 		public function get_calling_directory() {
 
@@ -293,6 +318,11 @@ if ( ! class_exists( '\Pablo_Pacheco\WP_Namespace_Autoloader\WP_Namespace_Autolo
 
 		/**
 		 * Get the namespace of the file that instantiated this class, presumably the root namespace.
+		 *
+		 * phpcs:disable WordPress.PHP.DevelopmentFunctions.error_log_debug_backtrace
+		 * phpcs:disable WordPress.WP.AlternativeFunctions.file_system_read_fopen
+		 * phpcs:disable WordPress.CodeAnalysis.AssignmentInCondition.FoundInWhileCondition
+		 * phpcs:disable WordPress.WP.AlternativeFunctions.file_system_read_fclose
 		 */
 		protected function get_calling_file_namespace() {
 
@@ -302,29 +332,33 @@ if ( ! class_exists( '\Pablo_Pacheco\WP_Namespace_Autoloader\WP_Namespace_Autolo
 			$calling_file = $debug_backtrace[1]['file'];
 
 			$calling_namespace = null;
-			$handle = fopen($calling_file, "r");
-			if ($handle) {
-				while (false !== ($line = fgets($handle))) {
-					if (0 === strpos($line, 'namespace')) {
-						$parts = explode(' ', $line);
-						$calling_namespace = rtrim(trim($parts[1]), ';');
+			$handle            = fopen( $calling_file, 'r' );
+			if ( $handle ) {
+				while ( false !== ( $line = fgets( $handle ) ) ) {
+					if ( 0 === strpos( $line, 'namespace' ) ) {
+						$parts             = explode( ' ', $line );
+						$calling_namespace = rtrim( trim( $parts[1] ), ';' );
 						break;
 					}
 				}
-				fclose($handle);
+				fclose( $handle );
 			}
 			return $calling_namespace;
 		}
 
 		/**
-		 * @return mixed
+		 * Getter for autoloader settings.
+		 *
+		 * @return array Associative array of settings as detailed in the constructor PHPDoc.
 		 */
 		public function get_args() {
 			return $this->args;
 		}
 
 		/**
-		 * @param mixed $args
+		 * Setter for autoloader settings.
+		 *
+		 * @param array $args Associative array of settings as detailed in the constructor PHPDoc.
 		 */
 		public function set_args( $args ) {
 			$this->args = $args;
