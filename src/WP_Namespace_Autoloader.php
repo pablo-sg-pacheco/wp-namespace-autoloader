@@ -227,7 +227,14 @@ if ( ! class_exists( '\Pablo_Pacheco\WP_Namespace_Autoloader\WP_Namespace_Autolo
 
 			// Prepend class.
 			if ( $args['prepend_class'] || $args['prepend_interface'] || $args['prepend_trait'] ) {
-				$final_file = $object_type . '-' . $final_file;
+				$prepended = preg_replace( '/(.*)-abstract$/', 'abstract-$1', $final_file );
+
+				// If no changes were made when looking for interfaces and abstract classes, prepend "class-".
+				if ( $prepended === $final_file ) {
+					$final_file = $object_type . '-' . $final_file;
+				} else {
+					$final_file = $prepended;
+				}
 			}
 
 			$final_file .= '.php';
