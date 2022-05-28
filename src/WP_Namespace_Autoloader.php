@@ -11,9 +11,9 @@
  * phpcs:disable WordPress.PHP.DevelopmentFunctions.error_log_print_r
  */
 
-namespace Hemmesdev\WP_Namespace_Autoloader;
+namespace Pablo_Pacheco\WP_Namespace_Autoloader;
 
-if ( ! class_exists( '\Hemmesdev\WP_Namespace_Autoloader\WP_Namespace_Autoloader' ) ) {
+if ( ! class_exists( '\Pablo_Pacheco\WP_Namespace_Autoloader\WP_Namespace_Autoloader' ) ) {
 	/**
 	 * Autoloader - Main class
 	 *

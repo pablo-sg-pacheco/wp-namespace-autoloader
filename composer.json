@@ -1,5 +1,5 @@
 {
-	"name": "hemmesdev/wp-namespace-autoloader",
+	"name": "pablo-sg-pacheco/wp-namespace-autoloader",
 	"type": "library",
 	"description": "A PHP autoloader class that follows the WordPress coding standards 2.0 and proposed 3.0 for class/interface/trait names and filenames",
 	"keywords": [
@@ -14,10 +14,6 @@
 		{
 			"name": "Pablo dos S G Pacheco",
 			"email": "pablo.sg.pacheco@gmail.com"
-		},
-		{
-			"name": "Tim Hemmes",
-			"email": "timhemmes91@gmail.com"
 		}
 	],
 	"require": {
@@ -32,12 +28,12 @@
 	},
 	"autoload": {
 		"psr-4": {
-			"Hemmesdev\\WP_Namespace_Autoloader\\": "src"
+			"Pablo_Pacheco\\WP_Namespace_Autoloader\\": "src"
 		}
 	},
 	"autoload-dev": {
 		"psr-4": {
-			"Hemmesdev\\WP_Namespace_Autoloader\\Tests\\": "tests"
+			"Pablo_Pacheco\\WP_Namespace_Autoloader\\Tests\\": "tests"
 		}
 	},
 	"extra": {

@@ -25,7 +25,7 @@ You just have to require it just like a composer default dependency. You may hav
 
 ```json
 "require": {	
-	"hemmesdev/wp-namespace-autoloader": "dev-master"
+	"pablo-sg-pacheco/wp-namespace-autoloader": "dev-master"
 },
 "config": {
 	"preferred-install": "dist"
@@ -45,7 +45,7 @@ Now you have to initialize it and you are good to go
 
 ```php
 <?php
-use Hemmesdev\WP_Namespace_Autoloader\WP_Namespace_Autoloader;
+use Pablo_Pacheco\WP_Namespace_Autoloader\WP_Namespace_Autoloader;
 $autoloader = new WP_Namespace_Autoloader( array(    
 	'directory'          => __DIR__,       // Directory of your project. It can be your theme or plugin. Defaults to __DIR__ (probably your best bet). 	
 	'namespace_prefix'   => 'My_Project',  // Main namespace of your project. E.g My_Project\Admin\Tests should be My_Project. Defaults to the namespace of the instantiating file.	
