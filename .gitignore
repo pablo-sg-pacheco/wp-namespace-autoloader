@@ -3,3 +3,5 @@ vendor/
 tests/
 .idea
 .idea/*
+/impl/
+index.php

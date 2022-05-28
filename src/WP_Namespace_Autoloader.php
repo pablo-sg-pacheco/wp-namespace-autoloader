@@ -11,9 +11,9 @@
  * phpcs:disable WordPress.PHP.DevelopmentFunctions.error_log_print_r
  */
 
-namespace Pablo_Pacheco\WP_Namespace_Autoloader;
+namespace Hemmesdev\WP_Namespace_Autoloader;
 
-if ( ! class_exists( '\Pablo_Pacheco\WP_Namespace_Autoloader\WP_Namespace_Autoloader' ) ) {
+if ( ! class_exists( '\Hemmesdev\WP_Namespace_Autoloader\WP_Namespace_Autoloader' ) ) {
 	/**
 	 * Autoloader - Main class
 	 *
@@ -54,6 +54,8 @@ if ( ! class_exists( '\Pablo_Pacheco\WP_Namespace_Autoloader\WP_Namespace_Autolo
 				'lowercase'            => array( 'file' ), // 'file' | folders
 				'underscore_to_hyphen' => array( 'file' ), // 'file' | folders
 				'prepend_class'        => true,
+                'prepend_interface'    => true,
+                'prepend_trait'        => true,
 				'classes_dir'          => array( '.', 'vendor' ),
 				'debug'                => false,
 			);
@@ -81,7 +83,7 @@ if ( ! class_exists( '\Pablo_Pacheco\WP_Namespace_Autoloader\WP_Namespace_Autolo
 			$args      = $this->get_args();
 			$namespace = $args['namespace_prefix'];
 
-			if ( ! class_exists( $class ) && ! interface_exists( $class ) ) {
+			if ( ! class_exists( $class ) && ! interface_exists( $class )  && ! trait_exists( $class ) ) {
 
 				if ( false !== strpos( $class, $namespace ) ) {
 					if ( ! class_exists( $class ) ) {
@@ -100,6 +102,9 @@ if ( ! class_exists( '\Pablo_Pacheco\WP_Namespace_Autoloader\WP_Namespace_Autolo
 		 */
 		public function autoload( $class ) {
 			if ( $this->need_to_autoload( $class ) ) {
+
+
+
 				$file_paths = $this->convert_class_to_file( $class );
 				foreach ( $file_paths as $file ) {
 					if ( file_exists( $file ) ) {
@@ -197,7 +202,7 @@ if ( ! class_exists( '\Pablo_Pacheco\WP_Namespace_Autoloader\WP_Namespace_Autolo
 		 *
 		 * @return string
 		 */
-		private function get_file_applying_wp_standards( $class ) {
+		private function get_file_applying_wp_standards($class, $object_type = 'class') {
 			$args = $this->get_args();
 
 			// Sanitized class and namespace prefix.
@@ -219,16 +224,8 @@ if ( ! class_exists( '\Pablo_Pacheco\WP_Namespace_Autoloader\WP_Namespace_Autolo
 			}
 
 			// Prepend class.
-			if ( $args['prepend_class'] ) {
-				$prepended = preg_replace( '/(.*)-interface$/', 'interface-$1', $final_file );
-				$prepended = preg_replace( '/(.*)-abstract$/', 'abstract-$1', $prepended );
-
-				// If no changes were made when looking for interfaces and abstract classes, prepend "class-".
-				if ( $prepended === $final_file ) {
-					$final_file = 'class-' . $final_file;
-				} else {
-					$final_file = $prepended;
-				}
+			if ( $args['prepend_class'] || $args['prepend_interface']  || $args['prepend_trait'] ) {
+                $final_file = $object_type . '-' . $final_file;
 			}
 
 			$final_file .= '.php';
@@ -279,22 +276,30 @@ if ( ! class_exists( '\Pablo_Pacheco\WP_Namespace_Autoloader\WP_Namespace_Autolo
 					return array();
 				}
 			}
-
+            $args                = $this->get_args();
 			$namespace_file_path = $this->get_namespace_file_path( $class );
-			$final_file          = $this->get_file_applying_wp_standards( $class );
+			$final_files          = array($this->get_file_applying_wp_standards( $class));
+
+            if($args['prepend_interface']) $final_files[] = $this->get_file_applying_wp_standards( $class, 'interface' );
+            if($args['prepend_trait']) $final_files[] = $this->get_file_applying_wp_standards( $class, 'trait' );
 
 			$class_files = array();
 
 			$dir = $this->get_dir();
 
-			if ( is_array( $dir ) ) {
+            foreach ($final_files as $final_file) {
 
-				foreach ( $dir as $class_dir ) {
-					$class_files[] = $class_dir . $namespace_file_path . $final_file;
-				}
-			} else {
-				$class_files[] = $dir . $namespace_file_path . $final_file;
-			}
+                if (is_array($dir)) {
+
+                    foreach ($dir as $class_dir) {
+                        $class_files[] = $class_dir . $namespace_file_path . $final_file;
+                    }
+
+                } else {
+                    $class_files[] = $dir . $namespace_file_path . $final_file;
+                }
+
+            }
 
 			return $class_files;
 		}
