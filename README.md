@@ -1,5 +1,5 @@
 # wp-namespace-autoloader
-A PHP autoloader class that follows the WordPress coding standards 2.0 and proposed 3.0 applying PSR-4 specification
+A PHP autoloader class that follows the WordPress coding standards 2.0 applying PSR-4 specification and optionally supports proposed 3.0 
 
 **Description**
 =====================
