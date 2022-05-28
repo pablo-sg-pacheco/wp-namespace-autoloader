@@ -8,7 +8,7 @@
 		"autoload",
 		"namespace"
 	],
-	"homepage": "https://github.com/hemmesdev/wp-namespace-autoloader",
+	"homepage": "https://github.com/pablo-pacheco/wp-namespace-autoloader",
 	"license": "GPLv2",
 	"authors": [
 		{
