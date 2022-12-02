@@ -170,7 +170,7 @@ if ( ! class_exists( '\Pablo_Pacheco\WP_Namespace_Autoloader\WP_Namespace_Autolo
 			$sanitized_namespace_prefix = $this->sanitize_namespace( $namespace_prefix, true );
 
 			// Removes prefix from class namespace.
-			$namespace_without_prefix = str_replace( $sanitized_namespace_prefix, '', $sanitized_class );
+			$namespace_without_prefix = preg_replace( '/' . $sanitized_namespace_prefix . '\/', '', $sanitized_class, 1 );
 
 			// Gets namespace file path.
 			$namespaces_without_prefix_arr = explode( '\\', $namespace_without_prefix );
